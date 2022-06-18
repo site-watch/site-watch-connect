@@ -6,7 +6,7 @@
     "plugin"
   ],
   "homepage": "http://www.atomicsmash.co.uk/",
-  "license": "GPLv2",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "David Darke",
