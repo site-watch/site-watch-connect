@@ -1,0 +1,18 @@
+{
+  "name": "site-watch/site-watch-connect",
+  "description": "A plugin to connect your WordPress site to Site Watch",
+  "keywords": [
+    "wordpress",
+    "plugin"
+  ],
+  "homepage": "http://www.atomicsmash.co.uk/",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "David Darke",
+      "email": "david@atomicsmash.co.uk",
+      "homepage": "https://www.atomicsmash.co.uk/"
+    }
+  ],
+  "type": "wordpress-plugin"
+}
