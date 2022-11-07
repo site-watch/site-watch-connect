@@ -15,11 +15,10 @@ namespace Sw_Admin_Form\Inc\Admin;
  */
 class Admin
 {
-
     /**
      * The ID of this plugin.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      * @access   private
      * @var      string    $plugin_name    The ID of this plugin.
      */
@@ -28,7 +27,7 @@ class Admin
     /**
      * The version of this plugin.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      * @access   private
      * @var      string    $version    The current version of this plugin.
      */
@@ -37,7 +36,7 @@ class Admin
     /**
      * The text domain of this plugin.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      * @access   private
      * @var      string    $plugin_text_domain    The text domain of this plugin.
      */
@@ -46,7 +45,7 @@ class Admin
     /**
      * Initialize the class and set its properties.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      * @param    string $plugin_name	The name of this plugin.
      * @param    string $version	The version of this plugin.
      * @param	 string $plugin_text_domain	The text domain of this plugin
@@ -61,7 +60,7 @@ class Admin
     /**
      * Register the stylesheets for the admin area.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function enqueue_styles()
     {
@@ -71,7 +70,7 @@ class Admin
     /**
      * Register the JavaScript for the admin area.
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function enqueue_scripts()
     {
@@ -83,7 +82,7 @@ class Admin
     /**
      * Callback for the admin menu
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function add_plugin_admin_menu()
     {
@@ -105,7 +104,7 @@ class Admin
 
     /**
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function the_form_response()
     {
@@ -130,7 +129,7 @@ class Admin
     /**
      * Redirect
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function custom_redirect($admin_notice, $response)
     {
@@ -143,11 +142,10 @@ class Admin
         )));
     }
 
-
     /**
      * Print Admin Notices
      *
-     * @since    1.0.0
+     * @since    0.0.1
      */
     public function print_plugin_admin_notices()
     {
@@ -162,7 +160,7 @@ class Admin
                 echo $html;
             }
 
-            // handle other types of form notices
+        // handle other types of form notices
         } else {
             return;
         }
