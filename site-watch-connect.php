@@ -47,6 +47,8 @@ require_once(PLUGIN_NAME_DIR . 'inc/core/class-init.php');
 require_once(PLUGIN_NAME_DIR . 'inc/core/class-loader.php');
 require_once(PLUGIN_NAME_DIR . 'inc/core/class-internationalization-i18n.php');
 require_once(PLUGIN_NAME_DIR . 'inc/core/class-api.php');
+require_once(PLUGIN_NAME_DIR . 'inc/core/class-activator.php');
+require_once(PLUGIN_NAME_DIR . 'inc/core/class-deactivator.php');
 require_once(PLUGIN_NAME_DIR . 'inc/admin/class-admin.php');
 
 
