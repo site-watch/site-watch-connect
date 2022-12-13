@@ -9,7 +9,7 @@
  * Plugin Name:       Site Watch Connect
  * Plugin URI:        https://www.atomicsmash.co.uk
  * Description:       This plugin provides the required API endpoints for Site Watch
- * Version:           1.0.2
+ * Version:           1.0.4
  * Author:            Atomic Smash
  * Author URI:        https://www.atomicsmash.co.uk
  * License:           GPL-2.0+

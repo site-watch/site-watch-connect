@@ -73,6 +73,7 @@ class Api
             $response['core'] = $this->wordpress_core();
             $response['plugins'] = $this->wordpress_plugins();
             $response['health'] = $this->wordpress_health();
+            $response['php'] = phpversion();
         }
 
         return $response;
