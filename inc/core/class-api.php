@@ -43,56 +43,64 @@ class Api
         register_rest_route('sitewatch/v1', '/features', array(
             'methods' => 'GET',
             'callback' => [$this,'get_details'],
+            'permission_callback' => [$this,'permission_check']
         ));
     }
 
-    public function get_details($request)
+    /**
+     * permission_callback for access validation
+     *
+     * @param object $request
+     * @return void
+     * @since    1.1.0
+     */
+    public function permission_check($request)
     {
         $authorizationHeader = $request->get_header('authorization');
 
-        if (!$authorizationHeader) {
+        if (!$authorizationHeader || $authorizationHeader == "Bearer") {
             return new \WP_Error('rest_forbidden', esc_html__('Please provide a key', 'site-watch-plugin'), array( 'status' => 401 ));
         }
 
-        $validation = $this->validate_key($authorizationHeader);
-
-        if ($validation === 403) {
-            return new \WP_Error('rest_forbidden', esc_html__('Site Watch key has not yet been generated', 'site-watch-plugin'), array( 'status' => 403 ));
-        }
-
-        if ($validation === 401) {
-            return new \WP_Error('rest_unauthorized', esc_html__('Access denied', 'site-watch-plugin'), array( 'status' => 401 ));
-        }
-
-        if ($validation) {
-            /** WordPress Plugin Administration API */
-            require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-
-            $response['urls'] = $this->wordpress_urls();
-            $response['site-watch-connect-version'] = $this->site_watch_connect_version();
-            $response['core'] = $this->wordpress_core();
-            $response['plugins'] = $this->wordpress_plugins();
-            $response['health'] = $this->wordpress_health();
-            $response['php'] = phpversion();
-        }
-
-        return $response;
+        return $this->validate_key($authorizationHeader);
     }
 
-    public function validate_key($auth_header)
+    /**
+     * Check the authentication header sent to the endpoint against the hashed key
+     *
+     * @param string $authorizationHeader
+     * @return void
+     * @since    1.1.0
+     */
+    public function validate_key($authorizationHeader)
     {
         $key = get_option('site_watch_key');
 
         if (!$key) {
-            return 403;
+            return new \WP_Error('rest_forbidden', esc_html__('Site Watch key has not yet been generated', 'site-watch-plugin'), array( 'status' => 403 ));
         }
 
         // substr to remove "Bearer"
-        if (wp_check_password(substr($auth_header, 7, 30), $key)) {
+        if (wp_check_password(substr($authorizationHeader, 7, 30), $key)) {
             return true;
         } else {
-            return 401;
+            return new \WP_Error('rest_unauthorized', esc_html__('Access denied', 'site-watch-plugin'), array( 'status' => 401 ));
         }
+    }
+
+    public function get_details($request)
+    {
+        require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+        $response['urls'] = $this->wordpress_urls();
+        $response['site-watch-connect-version'] = $this->site_watch_connect_version();
+        $response['core'] = $this->wordpress_core();
+        $response['plugins'] = $this->wordpress_plugins();
+        $response['health'] = $this->wordpress_health();
+        $response['php'] = phpversion();
+        // }
+
+        return $response;
     }
 
     public function site_watch_connect_version()
