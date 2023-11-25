@@ -42,8 +42,8 @@ class Api
     {
         register_rest_route('sitewatch/v1', '/features', array(
             'methods' => 'GET',
-            'callback' => [$this,'get_details'],
-            'permission_callback' => [$this,'permission_check']
+            'callback' => [$this, 'get_details'],
+            'permission_callback' => [$this, 'permission_check']
         ));
     }
 
@@ -59,7 +59,7 @@ class Api
         $authorizationHeader = $request->get_header('authorization');
 
         if (!$authorizationHeader || $authorizationHeader == "Bearer") {
-            return new \WP_Error('rest_forbidden', esc_html__('Please provide a key', 'site-watch-plugin'), array( 'status' => 401 ));
+            return new \WP_Error('rest_forbidden', esc_html__('Please provide a key', 'site-watch-plugin'), array('status' => 401));
         }
 
         return $this->validate_key($authorizationHeader);
@@ -77,14 +77,14 @@ class Api
         $key = get_option('site_watch_key');
 
         if (!$key) {
-            return new \WP_Error('rest_forbidden', esc_html__('Site Watch key has not yet been generated', 'site-watch-plugin'), array( 'status' => 403 ));
+            return new \WP_Error('rest_forbidden', esc_html__('Site Watch key has not yet been generated', 'site-watch-plugin'), array('status' => 403));
         }
 
         // substr to remove "Bearer"
         if (wp_check_password(substr($authorizationHeader, 7, 30), $key)) {
             return true;
         } else {
-            return new \WP_Error('rest_unauthorized', esc_html__('Access denied', 'site-watch-plugin'), array( 'status' => 401 ));
+            return new \WP_Error('rest_unauthorized', esc_html__('Access denied', 'site-watch-plugin'), array('status' => 401));
         }
     }
 
@@ -98,7 +98,7 @@ class Api
         $response['plugins'] = $this->wordpress_plugins();
         $response['health'] = $this->wordpress_health();
         $response['php'] = phpversion();
-        // }
+        $response['jetpack-protect'] = $this->jetpack_protect_metrics();
 
         return $response;
     }
@@ -163,5 +163,18 @@ class Api
     {
         $health_data = get_transient('health-check-site-status-result');
         return json_decode($health_data, true);
+    }
+
+    public function jetpack_protect_metrics()
+    {
+        if (is_plugin_active('jetpack-protect/jetpack-protect.php')) {
+            if (\get_option('jetpack_protect_status') != false) {
+                return unserialize(\get_option('jetpack_protect_status'));
+            } else {
+                return [];
+            }
+        } else {
+            return null;
+        }
     }
 }
