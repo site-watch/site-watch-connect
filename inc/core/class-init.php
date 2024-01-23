@@ -17,6 +17,7 @@ use Sw_Admin_Form\Inc\Core as Core;
  */
 class Init
 {
+    private $plugin_name;
 
     /**
      * The loader that's responsible for maintaining and registering all hooks that power

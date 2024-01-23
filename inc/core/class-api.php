@@ -16,6 +16,10 @@ use Sw_Admin_Form\Inc\Admin as Admin;
  */
 class Api
 {
+    private $plugin_name;
+    private $version;
+    private $plugin_text_domain;
+
     /**
      * Initialize the collections used to maintain the actions and filters.
      *
